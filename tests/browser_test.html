@@ -1,0 +1,26 @@
+<html>
+    <body>
+            <script src="../dist/browser/index.js"></script>
+            <script>
+
+                try {
+                    const value = 1;
+
+                    const isWorking = match(value)
+                        .caseEqual(1, true)
+                        .default(false);
+                    
+                    if (isWorking) {
+                        alert("the library works");
+                    } else {
+                        alert("The library doesn't work");
+                    }
+
+                } catch (e) {
+                    alert("There was an error. Look at the console",);
+                    throw e;
+                }
+
+            </script>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "name": "typed-match-expression",
+  "version": "0.0.1",
+  "description": "Javascript Pattern matching utility developed in typescript",
+  "main": "./dist/umd/index.js",
+  "browser": "./dist/browser/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/typings/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "test": "npx jest",
+    "clean": "npx rimraf dist/",
+    "prebuild": "npm run clean && npx tsc",
+    "build": "npx webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/typed-match-expression/typed-match-expression.git"
+  },
+  "keywords": [
+    "pattern matching",
+    "pattern",
+    "matching",
+    "match",
+    "switch",
+    "enhanced switch",
+    "typed",
+    "match expression",
+    "switch expression",
+    "functional",
+    "fp"
+  ],
+  "author": "Daniel García Asensio",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@babel/preset-env": "^7.2.0",
+    "@types/jest": "^23.3.10",
+    "babel-loader": "^8.0.4",
+    "jest": "^23.6.0",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.1.6",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
