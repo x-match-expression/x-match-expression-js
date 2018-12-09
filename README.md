@@ -1,15 +1,15 @@
 # Overview
-typed-match-expression is a Javascript Pattern matching utility developed in typescript that can be used standalone in the browser, in node or as ES module.
+x-match-expression is a javascript pattern matching library developed in typescript that can be used standalone in the browser, in node or as ES module.
 
 
 ### Installation
-- Install it with `npm install --save typed-match-expression` or reference it from CDN in the browser
+- Install it with `npm install --save x-match-expression` or reference it from CDN in the browser
 
 ### Usage
 
 #### In the browser
 
-- Add a script tag `<script src="https://unpkg.com/typed-match-expression@0.0.1/dist/browser/index.js" type="application/javascript"></script>`
+- Add a script tag `<script src="https://unpkg.com/x-match-expression/dist/browser/index.js" type="application/javascript"></script>`
 - And later on, use the global `match` function
 ```javascript
  const financialStatus = match(42)
@@ -22,7 +22,7 @@ typed-match-expression is a Javascript Pattern matching utility developed in typ
 #### In Node
 
 ```javascript
-const {match} = require("typed-match-expression");
+const {match} = require("x-match-expression");
 
 const isEven = match(2)
     .case(n => n % 2 === 0, true)
@@ -33,7 +33,7 @@ const isEven = match(2)
 #### as ES Module
 
 ```javascript
-import {match} from "typed-match-expression";
+import {match} from "x-match-expression";
 
 const areWeInTheFuture = match(new Date())
     .caseNewerThan(new Date(2050, 0, 1), true)
@@ -53,7 +53,7 @@ default method.
 #### Instance check example
 
 ```typescript
-import {match} from "typed-match-expression";
+import {match} from "x-match-expression";
 
 class FatalError {
     constructor(readonly id: string, readonly date: Date) {}
@@ -75,17 +75,17 @@ type Whatever =
 const info = getInfo(); // returns type Whatever
 
 const infoDetails = match(info)
-    .caseInstanceIf(FatalError, e => e.id === 404 => `No content found at ${e.date.toISOString()}`)
-    .caseInstance(FatalError, e => `Error #${e.id} received`)
-    .caseInstance(Warning, w => `Warning ${w.title}: ${w.message}`)
-    .caseInstance(MailMessage, m => `You received a message from ${m.sender}`)
+    .caseInstanceIf(FatalError, _ => _.id === 404 => `No content found at ${e.date.toISOString()}`)
+    .caseInstance(FatalError, _ => `Error #${_.id} received`)
+    .caseInstance(Warning, _ => `Warning ${_.title}: ${_.message}`)
+    .caseInstance(MailMessage, _ => `You received a message from ${_.sender}`)
     .default("Unknown information received");
 ```
 
 #### Float comparison
 
 ```typescript
-import {match} from "typed-match-expression";
+import {match} from "x-match-expression";
 
 const a = 0.2;
 const b = 0.4;
@@ -99,7 +99,7 @@ const whatHappens = match(a+b)
 #### Custom test that fails
 
 ```javascript
-import {match} from "typed-match-expression";
+import {match} from "x-match-expression";
 
 function isSomething(x) {
     throw "Error!"; // <-- look at this
@@ -113,7 +113,7 @@ const value = match(x)
 #### Set multiple return type (for typescript)
 
 ```typescript
-import {match} from "typed-match-expression";
+import {match} from "x-match-expression";
 
 const twice = match("hello world")
     .withReturnType<number|string>()

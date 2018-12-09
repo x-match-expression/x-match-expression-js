@@ -1,7 +1,7 @@
 {
-  "name": "typed-match-expression",
-  "version": "0.0.1",
-  "description": "Javascript Pattern matching utility developed in typescript",
+  "name": "x-match-expression",
+  "version": "0.1.0",
+  "description": "Javascript Pattern matching library developed in typescript",
   "main": "./dist/umd/index.js",
   "browser": "./dist/browser/index.js",
   "module": "./dist/esm/index.js",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/typed-match-expression/typed-match-expression.git"
+    "url": "https://github.com/x-match-expression/x-match-expression-js.git"
   },
   "keywords": [
     "pattern matching",
