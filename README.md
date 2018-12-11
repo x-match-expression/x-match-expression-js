@@ -7,7 +7,7 @@ x-match-expression is a javascript pattern matching library developed in typescr
 
 ### Usage
 
-#### In the browser
+#### In the browser (with a script tag)
 
 - Add a script tag `<script src="https://unpkg.com/x-match-expression/dist/browser/index.js" type="application/javascript"></script>`
 - And later on, use the global `match` function
