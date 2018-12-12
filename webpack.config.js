@@ -15,7 +15,7 @@ module.exports = [
         module: {
             rules: [
                 {
-                    test: /\.ts$/,
+                    test: /\.js$/,
                     use: "babel-loader"
                 }
             ]
@@ -37,7 +37,7 @@ module.exports = [
         module: {
             rules: [
                 {
-                    test: /\.ts$/,
+                    test: /\.js$/,
                     use: "babel-loader"
                 }
             ]
