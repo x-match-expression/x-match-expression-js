@@ -32,7 +32,7 @@ export class BaseMapper<R> {
 }
 
 export interface Class {
-    new(...args: any[]): Class;
+    new(...args: any[]): any;
 }
 
 export type Instance<T> =
