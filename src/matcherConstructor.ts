@@ -31,7 +31,7 @@ export class MatcherConstructor<E> {
         return new Matcher<E, R>(this.element);
     }
 
-    case<R, E>(test: (element: any) => boolean, mapper: R | ((element: E) => (R))) {
+    case<R, E>(test: (element: E) => boolean, mapper: R | ((element: E) => (R))) {
         return new Matcher(this.element, new CustomCase(test, mapper));
     }
 
