@@ -117,42 +117,42 @@ export class Matcher<R> {
         return this;
     }
 
-    caseGreaterThan(otherElement: any, mapper: R | ((element: number) => R)): Matcher<R> {
+    caseGreaterThan(otherElement: number, mapper: R | ((element: number) => R)): Matcher<R> {
         this.cases.push(new NumberGreaterCase(otherElement, mapper));
         return this;
     }
 
-    caseGreaterThanIf(otherElement: any, test: (element: number) => boolean, mapper: R | ((element: number) => R)): Matcher<R> {
+    caseGreaterThanIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R)): Matcher<R> {
         this.cases.push(new IfCase(new NumberGreaterCase(otherElement, mapper), test));
         return this;
     }
 
-    caseGreaterEqualThan(otherElement: any, mapper: R | ((element: number) => R)): Matcher<R> {
+    caseGreaterEqualThan(otherElement: number, mapper: R | ((element: number) => R)): Matcher<R> {
         this.cases.push(new NumberGreaterEqualCase(otherElement, mapper));
         return this;
     }
 
-    caseGreaterEqualThanIf(otherElement: any, test: (element: number) => boolean, mapper: R | ((element: number) => R)): Matcher<R> {
+    caseGreaterEqualThanIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R)): Matcher<R> {
         this.cases.push(new IfCase(new NumberGreaterEqualCase(otherElement, mapper), test));
         return this;
     }
 
-    caseLessThan(otherElement: any, mapper: R | ((element: number) => R)): Matcher<R> {
+    caseLessThan(otherElement: number, mapper: R | ((element: number) => R)): Matcher<R> {
         this.cases.push(new NumberLessCase(otherElement, mapper));
         return this;
     }
 
-    caseLessThanIf(otherElement: any, test: (element: number) => boolean, mapper: R | ((element: number) => R)): Matcher<R> {
+    caseLessThanIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R)): Matcher<R> {
         this.cases.push(new IfCase(new NumberLessCase(otherElement, mapper), test));
         return this;
     }
 
-    caseLessEqualThan(otherElement: any, mapper: R | ((element: number) => R)): Matcher<R> {
+    caseLessEqualThan(otherElement: number, mapper: R | ((element: number) => R)): Matcher<R> {
         this.cases.push(new NumberLessEqualCase(otherElement, mapper));
         return this;
     }
 
-    caseLessEqualThanIf(otherElement: any, test: (element: number) => boolean, mapper: R | ((element: number) => R)): Matcher<R> {
+    caseLessEqualThanIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R)): Matcher<R> {
         this.cases.push(new IfCase(new NumberLessEqualCase(otherElement, mapper), test));
         return this;
     }

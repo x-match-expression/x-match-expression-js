@@ -28,7 +28,7 @@ export class NumberAlmostEqualCase<R> extends NumberCase<R> {
 
 export class NumberGreaterCase<R> extends NumberCase<R> {
 
-    constructor(readonly otherElement: any, readonly mapper: R | ((element: any) => R)) {
+    constructor(readonly otherElement: number, readonly mapper: R | ((element: any) => R)) {
         super(mapper);
     }
 
@@ -39,7 +39,7 @@ export class NumberGreaterCase<R> extends NumberCase<R> {
 
 export class NumberGreaterEqualCase<R> extends NumberCase<R> {
 
-    constructor(readonly otherElement: any, readonly mapper: R | ((element: any) => R)) {
+    constructor(readonly otherElement: number, readonly mapper: R | ((element: any) => R)) {
         super(mapper);
     }
 
@@ -50,7 +50,7 @@ export class NumberGreaterEqualCase<R> extends NumberCase<R> {
 
 export class NumberLessCase<R> extends NumberCase<R> {
 
-    constructor(readonly otherElement: any, readonly mapper: R | ((element: any) => R)) {
+    constructor(readonly otherElement: number, readonly mapper: R | ((element: any) => R)) {
         super(mapper);
     }
 
@@ -61,7 +61,7 @@ export class NumberLessCase<R> extends NumberCase<R> {
 
 export class NumberLessEqualCase<R> extends NumberCase<R> {
 
-    constructor(readonly otherElement: any, readonly mapper: R | ((element: any) => R)) {
+    constructor(readonly otherElement: number, readonly mapper: R | ((element: any) => R)) {
         super(mapper);
     }
 
