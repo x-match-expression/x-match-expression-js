@@ -60,7 +60,7 @@ export class ObjectWithKeysCase<R, K extends Array<string>> extends BaseMapper<R
 
 export class NullCase<R> extends BaseMapper<R> implements Case<R> {
 
-    constructor(readonly mapper: R | ((element: object) => R)) {
+    constructor(readonly mapper: R | (() => R)) {
         super(mapper);
     }
 
@@ -70,9 +70,9 @@ export class NullCase<R> extends BaseMapper<R> implements Case<R> {
     }
 }
 
-export class NotNullCase<R> extends BaseMapper<R> implements Case<R> {
+export class NotNullCase<E, R> extends BaseMapper<R> implements Case<R> {
 
-    constructor(readonly mapper: R | ((element: object) => R)) {
+    constructor(readonly mapper: R | ((element: E) => R)) {
         super(mapper);
     }
 

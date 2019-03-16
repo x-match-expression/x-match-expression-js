@@ -1,8 +1,8 @@
 import {BaseMapper, Case} from "./base";
 
-export class CustomCase<R> extends BaseMapper<R> implements Case<R> {
+export class CustomCase<E, R> extends BaseMapper<R> implements Case<R> {
 
-    constructor(readonly test: (element: any) => boolean, readonly mapper: R | ((element: any) => R)) {
+    constructor(readonly test: (element: E) => boolean, readonly mapper: R | ((element: E) => R)) {
         super(mapper);
     }
 

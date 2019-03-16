@@ -1,23 +1,23 @@
 import {BaseMapper, Case} from "./base";
 
-export class EqualCase<R> extends BaseMapper<R> implements Case<R> {
+export class EqualCase<E, R> extends BaseMapper<R> implements Case<R> {
 
-    constructor(readonly otherElement: any, readonly mapper: R | ((element: any) => R)) {
+    constructor(readonly otherElement: E, readonly mapper: R | ((element: E) => R)) {
         super(mapper);
     }
 
-    matches(element: any) {
+    matches(element: E) {
         return element === this.otherElement;
     }
 }
 
-export class NotEqualCase<R> extends BaseMapper<R> implements Case<R> {
+export class NotEqualCase<E, R> extends BaseMapper<R> implements Case<R> {
 
-    constructor(readonly otherElement: any, readonly mapper: R | ((element: any) => R)) {
+    constructor(readonly otherElement: E, readonly mapper: R | ((element: E) => R)) {
         super(mapper);
     }
 
-    matches(element: any) {
+    matches(element: E) {
         return element !== this.otherElement;
     }
 }
