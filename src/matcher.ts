@@ -23,292 +23,234 @@ import {ArrayCase, EmptyArrayCase} from "./case/array";
 
 export class Matcher<E, R> {
 
-    private readonly cases: Case<R>[] = [];
-
-    constructor(private readonly element: E, startingPattern?: Case<R>) {
-
-        if (startingPattern != null)
-            this.cases.push(startingPattern);
-
+    constructor(
+        private readonly element: E,
+        private readonly cases: Case<R>[]
+    ) {
     }
 
-    case(test: (element: E) => boolean, mapper: R | ((element: E) => (R))) {
-        this.cases.push(new CustomCase(test, mapper));
-        return this;
+    case<R2>(test: (element: E) => boolean, mapper: R2 | ((element: E) => (R2))) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new CustomCase(test, mapper)]);
     }
 
-    caseInstance<T extends Class | Function>(constructor: T, mapper: R | ((element: Instance<T>) => R)) {
-        this.cases.push(new InstanceCase(constructor, mapper));
-        return this;
+    caseInstance<T extends Class | Function, R2>(constructor: T, mapper: R2 | ((element: Instance<T>) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new InstanceCase(constructor, mapper)]);
     }
 
-    caseInstanceIf<T extends Class | Function>(type: T, test: (element: Instance<T>) => boolean, mapper: R | ((element: Instance<T>) => (R))) {
-        this.cases.push(new IfCase(new InstanceCase(type, mapper), test));
-        return this;
+    caseInstanceIf<T extends Class | Function, R2>(type: T, test: (element: Instance<T>) => boolean, mapper: R2 | ((element: Instance<T>) => (R2))) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new InstanceCase(type, mapper), test)]);
     }
 
-    caseTrue(mapper: R | (() => R)) {
-        this.cases.push(new TrueCase(mapper));
-        return this;
+    caseTrue<R2>(mapper: R2 | (() => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new TrueCase(mapper)]);
     }
 
-    caseTrueIf(test: () => boolean, mapper: R | (() => R)) {
-        this.cases.push(new IfCase(new TrueCase(mapper), test));
-        return this;
+    caseTrueIf<R2>(test: () => boolean, mapper: R2 | (() => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new TrueCase(mapper), test)]);
     }
 
-    caseFalse(mapper: R | (() => R)) {
-        this.cases.push(new FalseCase(mapper));
-        return this;
+    caseFalse<R2>(mapper: R2 | (() => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new FalseCase(mapper)]);
     }
 
-    caseFalseIf(test: () => boolean, mapper: R | (() => R)) {
-        this.cases.push(new IfCase(new FalseCase(mapper), test));
-        return this;
+    caseFalseIf<R2>(test: () => boolean, mapper: R2 | (() => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new FalseCase(mapper), test)]);
     }
 
-    caseBoolean(mapper: R | ((element: boolean) => R)) {
-        this.cases.push(new BooleanCase(mapper));
-        return this;
+    caseBoolean<R2>(mapper: R2 | ((element: boolean) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new BooleanCase(mapper)]);
     }
 
-    caseBooleanIf(test: (element: boolean) => boolean, mapper: R | ((element: boolean) => R)) {
-        this.cases.push(new IfCase(new BooleanCase(mapper), test));
-        return this;
+    caseBooleanIf<R2>(test: (element: boolean) => boolean, mapper: R2 | ((element: boolean) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new BooleanCase(mapper), test)]);
     }
 
-    caseEqual(otherElement: E, mapper: R | ((element: E) => R)) {
-        this.cases.push(new EqualCase(otherElement, mapper));
-        return this;
+    caseEqual<R2>(otherElement: E, mapper: R2 | ((element: E) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new EqualCase(otherElement, mapper)]);
     }
 
-    caseEqualIf(otherElement: E, test: (element: E) => boolean, mapper: R | ((element: E) => R)) {
-        this.cases.push(new EqualCase(otherElement, mapper));
-        return this;
+    caseEqualIf<R2>(otherElement: E, test: (element: E) => boolean, mapper: R2 | ((element: E) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new EqualCase(otherElement, mapper)]);
     }
 
-    caseNotEqual(otherElement: E, mapper: R | ((element: E) => R)) {
-        this.cases.push(new NotEqualCase(otherElement, mapper));
-        return this;
+    caseNotEqual<R2>(otherElement: E, mapper: R2 | ((element: E) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NotEqualCase(otherElement, mapper)]);
     }
 
-    caseNotEqualIf(otherElement: E, test: (element: E) => boolean, mapper: R | ((element: E) => R)) {
-        this.cases.push(new IfCase(new NotEqualCase(otherElement, mapper), test));
-        return this;
+    caseNotEqualIf<R2>(otherElement: E, test: (element: E) => boolean, mapper: R2 | ((element: E) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NotEqualCase(otherElement, mapper), test)]);
     }
 
-    caseNumber(mapper: R | ((element: number) => R)) {
-        this.cases.push(new NumberCase(mapper));
-        return this;
+    caseNumber<R2>(mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NumberCase(mapper)]);
     }
 
-    caseNumberIf(test: (element: number) => boolean, mapper: R | ((element: number) => R)) {
-        this.cases.push(new IfCase(new NumberCase(mapper), test));
-        return this;
+    caseNumberIf<R2>(test: (element: number) => boolean, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NumberCase(mapper), test)]);
     }
 
-    caseAlmostEqual(otherElement: number, mapper: R | ((element: number) => R), acceptedError?: number) {
-        this.cases.push(new NumberAlmostEqualCase(otherElement, mapper, acceptedError));
-        return this;
+    caseAlmostEqual<R2>(otherElement: number, mapper: R2 | ((element: number) => R2), acceptedError?: number) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NumberAlmostEqualCase(otherElement, mapper, acceptedError)]);
     }
 
-    caseAlmostEqualIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R), acceptedError?: number) {
-        this.cases.push(new IfCase(new NumberAlmostEqualCase(otherElement, mapper, acceptedError), test));
-        return this;
+    caseAlmostEqualIf<R2>(otherElement: number, test: (element: number) => boolean, mapper: R2 | ((element: number) => R2), acceptedError?: number) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NumberAlmostEqualCase(otherElement, mapper, acceptedError), test)]);
     }
 
-    caseGreaterThan(otherElement: number, mapper: R | ((element: number) => R)) {
-        this.cases.push(new NumberGreaterCase(otherElement, mapper));
-        return this;
+    caseGreaterThan<R2>(otherElement: number, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NumberGreaterCase(otherElement, mapper)]);
     }
 
-    caseGreaterThanIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R)) {
-        this.cases.push(new IfCase(new NumberGreaterCase(otherElement, mapper), test));
-        return this;
+    caseGreaterThanIf<R2>(otherElement: number, test: (element: number) => boolean, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NumberGreaterCase(otherElement, mapper), test)]);
     }
 
-    caseGreaterEqualThan(otherElement: number, mapper: R | ((element: number) => R)) {
-        this.cases.push(new NumberGreaterEqualCase(otherElement, mapper));
-        return this;
+    caseGreaterEqualThan<R2>(otherElement: number, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NumberGreaterEqualCase(otherElement, mapper)]);
     }
 
-    caseGreaterEqualThanIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R)) {
-        this.cases.push(new IfCase(new NumberGreaterEqualCase(otherElement, mapper), test));
-        return this;
+    caseGreaterEqualThanIf<R2>(otherElement: number, test: (element: number) => boolean, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NumberGreaterEqualCase(otherElement, mapper), test)]);
     }
 
-    caseLessThan(otherElement: number, mapper: R | ((element: number) => R)) {
-        this.cases.push(new NumberLessCase(otherElement, mapper));
-        return this;
+    caseLessThan<R2>(otherElement: number, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NumberLessCase(otherElement, mapper)]);
     }
 
-    caseLessThanIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R)) {
-        this.cases.push(new IfCase(new NumberLessCase(otherElement, mapper), test));
-        return this;
+    caseLessThanIf<R2>(otherElement: number, test: (element: number) => boolean, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NumberLessCase(otherElement, mapper), test)]);
     }
 
-    caseLessEqualThan(otherElement: number, mapper: R | ((element: number) => R)) {
-        this.cases.push(new NumberLessEqualCase(otherElement, mapper));
-        return this;
+    caseLessEqualThan<R2>(otherElement: number, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NumberLessEqualCase(otherElement, mapper)]);
     }
 
-    caseLessEqualThanIf(otherElement: number, test: (element: number) => boolean, mapper: R | ((element: number) => R)) {
-        this.cases.push(new IfCase(new NumberLessEqualCase(otherElement, mapper), test));
-        return this;
+    caseLessEqualThanIf<R2>(otherElement: number, test: (element: number) => boolean, mapper: R2 | ((element: number) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NumberLessEqualCase(otherElement, mapper), test)]);
     }
 
-    caseNull(mapper: R | (() => R)) {
-        this.cases.push(new NullCase(mapper));
-        return this;
+    caseNull<R2>(mapper: R2 | (() => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NullCase(mapper)]);
     }
 
-    caseNullIf(test: () => boolean, mapper: R | (() => R)) {
-        this.cases.push(new IfCase(new NullCase(mapper), test));
-        return this;
+    caseNullIf<R2>(test: () => boolean, mapper: R2 | (() => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NullCase(mapper), test)]);
     }
 
-    caseNotNull(mapper: R | ((element: E) => R)) {
-        this.cases.push(new NotNullCase(mapper));
-        return this;
+    caseNotNull<R2>(mapper: R2 | ((element: E) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new NotNullCase(mapper)]);
     }
 
-    caseNotNullIf(test: (element: E) => boolean, mapper: R | ((element: E) => R)) {
-        this.cases.push(new IfCase(new NotNullCase(mapper), test));
-        return this;
+    caseNotNullIf<R2>(test: (element: E) => boolean, mapper: R2 | ((element: E) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new NotNullCase(mapper), test)]);
     }
 
-    caseObject(mapper: R | ((element: object) => R)) {
-        this.cases.push(new ObjectCase(mapper));
-        return this;
+    caseObject<R2>(mapper: R2 | ((element: object) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new ObjectCase(mapper)]);
     }
 
-    caseObjectIf(test: (element: object) => boolean, mapper: R | ((element: object) => R)) {
-        this.cases.push(new IfCase(new ObjectCase(mapper), test));
-        return this;
+    caseObjectIf<R2>(test: (element: object) => boolean, mapper: R2 | ((element: object) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new ObjectCase(mapper), test)]);
     }
 
-    caseObjectLike<O extends object>(other: O, mapper: R | ((element: O) => R)) {
-        this.cases.push(new ObjectLikeCase(other, mapper));
-        return this;
+    caseObjectLike<O extends object, R2>(other: O, mapper: R2 | ((element: O) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new ObjectLikeCase(other, mapper)]);
     }
 
-    caseObjectLikeIf<O extends object>(other: O, test: (element: O) => boolean, mapper: R | ((element: O) => R)) {
-        this.cases.push(new IfCase(new ObjectLikeCase(other, mapper), test));
-        return this;
+    caseObjectLikeIf<O extends object, R2>(other: O, test: (element: O) => boolean, mapper: R2 | ((element: O) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new ObjectLikeCase(other, mapper), test)]);
     }
 
     // todo change maper element type with a type that contains the checked keys
-    caseObjectWithKeys<K extends Array<string>>(keys: K, mapper: R | ((element: Record<number, keyof K>) => R)) {
-        this.cases.push(new ObjectWithKeysCase(keys, mapper));
-        return this;
+    caseObjectWithKeys<K extends Array<string>, R2>(keys: K, mapper: R2 | ((element: Record<number, keyof K>) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new ObjectWithKeysCase(keys, mapper)]);
     }
 
-    caseObjectWithKeysIf<K extends Array<string>>(keys: K, test: (element: object) => boolean, mapper: R | ((element: Record<number, keyof K>) => R)) {
-        this.cases.push(new IfCase(new ObjectWithKeysCase(keys, mapper), test));
-        return this;
+    caseObjectWithKeysIf<K extends Array<string>, R2>(keys: K, test: (element: object) => boolean, mapper: R2 | ((element: Record<number, keyof K>) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new ObjectWithKeysCase(keys, mapper), test)]);
     }
 
-    caseString(mapper: R | ((element: string) => R)) {
-        this.cases.push(new StringCase(mapper));
-        return this;
+    caseString<R2>(mapper: R2 | ((element: string) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new StringCase(mapper)]);
     }
 
-    caseStringIf(test: (element: string) => boolean, mapper: R | ((element: string) => R)) {
-        this.cases.push(new IfCase(new StringCase(mapper), test));
-        return this;
+    caseStringIf<R2>(test: (element: string) => boolean, mapper: R2 | ((element: string) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new StringCase(mapper), test)]);
     }
 
-    caseStringLike(exp: RegExp, mapper: R | ((element: RegExpExecArray) => R)) {
-        this.cases.push(new StringLikeCase(exp, mapper));
-        return this;
+    caseStringLike<R2>(exp: RegExp, mapper: R2 | ((element: RegExpExecArray) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new StringLikeCase(exp, mapper)]);
     }
 
-    caseStringLikeIf(exp: RegExp, test: (element: string) => boolean, mapper: R | ((element: RegExpExecArray) => R)) {
-        this.cases.push(new IfCase(new StringLikeCase(exp, mapper), test));
-        return this;
+    caseStringLikeIf<R2>(exp: RegExp, test: (element: string) => boolean, mapper: R2 | ((element: RegExpExecArray) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new StringLikeCase(exp, mapper), test)]);
     }
 
-    caseEmptyString(mapper: R | ((element: string) => R)) {
-        this.cases.push(new EmptyStringCase(mapper));
-        return this;
+    caseEmptyString<R2>(mapper: R2 | ((element: string) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new EmptyStringCase(mapper)]);
     }
 
-    caseEmptyStringIf(test: () => boolean, mapper: R | ((element: string) => R)) {
-        this.cases.push(new IfCase(new EmptyStringCase(mapper), test));
-        return this;
+    caseEmptyStringIf<R2>(test: () => boolean, mapper: R2 | ((element: string) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new EmptyStringCase(mapper), test)]);
     }
 
-    caseDate(mapper: R | ((element: Date) => R)) {
-        this.cases.push(new DateCase(mapper));
-        return this;
+    caseDate<R2>(mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new DateCase(mapper)]);
     }
 
-    caseDateIf(test: (element: Date) => boolean, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new IfCase(new DateCase(mapper), test));
-        return this;
+    caseDateIf<R2>(test: (element: Date) => boolean, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new DateCase(mapper), test)]);
     }
 
-    caseOlderThan(other: Date, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new DateOlderThanCase(other, mapper));
-        return this;
+    caseOlderThan<R2>(other: Date, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new DateOlderThanCase(other, mapper)]);
     }
 
-    caseOlderThanIf(other: Date, test: (element: Date) => boolean, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new IfCase(new DateOlderThanCase(other, mapper), test));
-        return this;
+    caseOlderThanIf<R2>(other: Date, test: (element: Date) => boolean, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new DateOlderThanCase(other, mapper), test)]);
     }
 
-    caseOlderEqualThan(other: Date, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new DateOlderEqualThanCase(other, mapper));
-        return this;
+    caseOlderEqualThan<R2>(other: Date, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new DateOlderEqualThanCase(other, mapper)]);
     }
 
-    caseOlderEqualThanIf(other: Date, test: (element: Date) => boolean, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new IfCase(new DateOlderEqualThanCase(other, mapper), test));
-        return this;
+    caseOlderEqualThanIf<R2>(other: Date, test: (element: Date) => boolean, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new DateOlderEqualThanCase(other, mapper), test)]);
     }
 
-    caseNewerThan(other: Date, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new DateNewerThanCase(other, mapper));
-        return this;
+    caseNewerThan<R2>(other: Date, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new DateNewerThanCase(other, mapper)]);
     }
 
-    caseNewerThanIf(other: Date, test: (element: Date) => boolean, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new IfCase(new DateNewerThanCase(other, mapper), test));
-        return this;
+    caseNewerThanIf<R2>(other: Date, test: (element: Date) => boolean, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new DateNewerThanCase(other, mapper), test)]);
     }
 
-    caseNewerEqualThan(other: Date, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new DateNewerEqualThanCase(other, mapper));
-        return this;
+    caseNewerEqualThan<R2>(other: Date, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new DateNewerEqualThanCase(other, mapper)]);
     }
 
-    caseNewerEqualThanIf(other: Date, test: (element: Date) => boolean, mapper: R | ((element: Date) => R)) {
-        this.cases.push(new IfCase(new DateNewerEqualThanCase(other, mapper), test));
-        return this;
+    caseNewerEqualThanIf<R2>(other: Date, test: (element: Date) => boolean, mapper: R2 | ((element: Date) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new DateNewerEqualThanCase(other, mapper), test)]);
     }
 
-    caseArray(mapper: R | ((element: Array<any>) => R)) {
-        this.cases.push(new ArrayCase(mapper));
-        return this;
+    caseArray<R2>(mapper: R2 | ((element: Array<any>) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new ArrayCase(mapper)]);
     }
 
-    caseArrayIf(test: (element: Array<any>) => boolean, mapper: R | ((element: Array<any>) => R)) {
-        this.cases.push(new IfCase(new ArrayCase(mapper), test));
-        return this;
+    caseArrayIf<R2>(test: (element: Array<any>) => boolean, mapper: R2 | ((element: Array<any>) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new ArrayCase(mapper), test)]);
     }
 
-    caseEmptyArray(mapper: R | ((element: Array<any>) => R)) {
-        this.cases.push(new EmptyArrayCase(mapper));
-        return this;
+    caseEmptyArray<R2>(mapper: R2 | ((element: Array<any>) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new EmptyArrayCase(mapper)]);
     }
 
-    caseEmptyArrayIf(test: (element: Array<any>) => boolean, mapper: R | ((element: Array<any>) => R)) {
-        this.cases.push(new IfCase(new EmptyArrayCase(mapper), test));
-        return this;
+    caseEmptyArrayIf<R2>(test: (element: Array<any>) => boolean, mapper: R2 | ((element: Array<any>) => R2)) {
+        return new Matcher<E, R | R2>(this.element, [...this.cases, new IfCase(new EmptyArrayCase(mapper), test)]);
     }
 
-    default(mapper: R | ((element: any) => R)): R {
+    default<R2>(mapper: R2 | ((element: any) => R2)): R | R2 {
 
         for (let i = 0; i < this.cases.length; i++) {
 

@@ -11,7 +11,6 @@ test("caseDate match a date object (MatcherConstructor)", () => {
 
 test("caseDate match a date object (Matcher)", () => {
     const isADate = match(new Date())
-        .withReturnType<boolean>()
         .caseDate(true)
         .default(false);
 

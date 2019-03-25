@@ -110,13 +110,12 @@ const value = match(x)
     .default("This is nothing");
 ```
 
-#### Set multiple return type (for typescript)
+#### With union type as return
 
 ```typescript
 import {match} from "x-match-expression";
 
-const twice = match("hello world")
-    .withReturnType<number|string>()
+const twice: number | string = match("hello world")
     .caseString(s => `${s}${s}`)
     .caseNumber(n => n*2)
     .default(0);

@@ -8,7 +8,7 @@ import {MatcherConstructor} from "../../src/matcherConstructor";
  */
 test("MatcherConstructor and Matcher classes contains the same case methods", () => {
     const matcherConstructor = new MatcherConstructor("x");
-    const matcher = new Matcher("x");
+    const matcher = new Matcher("x", []);
 
     for (let key in matcherConstructor) {
         if (isCaseMethod(matcherConstructor, key) && (matcher as any)[key] == null)

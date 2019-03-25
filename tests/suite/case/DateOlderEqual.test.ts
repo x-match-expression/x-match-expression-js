@@ -11,7 +11,6 @@ test("caseOlderEqualThan match a date older than another one (MatcherConstructor
 
 test("caseDateOlderEqualThan match a date older than another one (Matcher)", () => {
     const isADate = match(new Date(2000, 0, 1))
-        .withReturnType<boolean>()
         .caseOlderEqualThan(new Date(2020, 0, 1), true)
         .default(false);
 
@@ -28,7 +27,6 @@ test("caseOlderEqualThan match a date equal than another one (MatcherConstructor
 
 test("caseDateOlderEqualThan match a date equal than another one (Matcher)", () => {
     const isADate = match(new Date(2000, 0, 1))
-        .withReturnType<boolean>()
         .caseOlderEqualThan(new Date(2000, 0, 1), true)
         .default(false);
 
@@ -45,7 +43,6 @@ test("caseOlderEqualThan dont match a date newer than another one (MatcherConstr
 
 test("caseDateOlderEqualThan dont match a date equal than another one (Matcher)", () => {
     const isADate = match(new Date(2020, 0, 1))
-        .withReturnType<boolean>()
         .caseOlderEqualThan(new Date(2000, 0, 1), true)
         .default(false);
 
