@@ -1,6 +1,6 @@
 {
   "name": "x-match-expression",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Javascript Pattern matching library developed in typescript",
   "main": "./dist/umd/index.js",
   "types": "./dist/typings/index.d.ts",
